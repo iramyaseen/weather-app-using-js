@@ -18,6 +18,7 @@ async function getWeather(city = "sahiwal") {
 
   document.querySelector(".weather-icon img").src = data.current.condition.icon;
 }
+
 const searchButton = document.querySelector(".search-container button");
 searchButton.addEventListener("click", () => {
   const city = document.querySelector(".search-container input").value;
