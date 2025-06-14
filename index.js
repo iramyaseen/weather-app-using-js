@@ -7,16 +7,29 @@ async function getWeather(city = "sahiwal") {
   const response = await fetch(api_url);
   const data = await response.json();
 
-  document.querySelector(".location").innerText = data.location.name;
-  document.querySelector(".temperature").innerText =
-    Math.round(data.current.temp_c) + "°C";
+  if (data.error) {
+    document.querySelector(".error-message").innerText = data.error.message;
+    document.querySelector(".location").style.display = "none";
+    document.querySelector(".temperature").style.display = "none";
 
-  document.querySelector(".detail-info .value").innerText =
-    data.current.humidity + "%";
-  document.querySelector(".detail-in .value").innerText =
-    data.current.wind_kph + " km/h";
+    document.querySelector(".detail-info").style.display = "none";
+    document.querySelector(".weather-details").style.display = "none";
 
-  document.querySelector(".weather-icon img").src = data.current.condition.icon;
+    document.querySelector(".weather-icon img").style.display = "none";
+    return;
+  } else {
+    document.querySelector(".location").innerText = data.location.name;
+    document.querySelector(".temperature").innerText =
+      Math.round(data.current.temp_c) + "°C";
+
+    document.querySelector(".detail-info .value").innerText =
+      data.current.humidity + "%";
+    document.querySelector(".detail-in .value").innerText =
+      data.current.wind_kph + " km/h";
+
+    document.querySelector(".weather-icon img").src =
+      data.current.condition.icon;
+  }
 }
 
 const searchButton = document.querySelector(".search-container button");
